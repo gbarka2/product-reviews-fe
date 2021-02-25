@@ -1,7 +1,27 @@
 import logo from './logo.svg';
 import './App.css';
+import React, {useState, useEffect} from 'react'
 
 function App() {
+
+  const [data, setData] = useState()
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const res = await fetch("http://localhost:3000/products")
+        const json = await res.json()
+        setData(json)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    getData()
+    console.log('data', data)
+  }, [])
+
+
+
   return (
     <div className="App">
       <header className="App-header">

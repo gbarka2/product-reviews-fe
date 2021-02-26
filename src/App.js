@@ -1,10 +1,14 @@
-import logo from './logo.svg';
+
 import './App.css';
 import React, {useState, useEffect} from 'react'
+import Product from './Product'
+import {Route, Link, Switch} from 'react-router-dom'
+import Review from './Review'
 
 function App() {
 
   const [data, setData] = useState()
+  const [reviews, setReviews] = useState()
 
   useEffect(() => {
     const getData = async () => {
@@ -20,24 +24,40 @@ function App() {
     console.log('data', data)
   }, [])
 
-
+  const getReviews = async (product) => {
+    try {
+      const res = await fetch("http://localhost:3000/products/" + product + "/reviews")
+      const json = await res.json()
+      setReviews(json)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Products</h1>
+      <main>
+        <Switch>
+          <Route
+            exact
+            path='/'
+            render={(rp) => <Product {...rp} products={data} handleClick={getReviews} />}
+          />
+          <Route
+            path='/create'
+            // render
+          />
+          <Route
+            path='/edit'
+            // render
+          />
+          <Route 
+            path='/review'
+            render={(rp) => <Review {...rp} reviews={reviews} />}
+          />
+        </Switch>
+      </main>
     </div>
   );
 }

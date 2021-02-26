@@ -22,6 +22,9 @@ const Review = ({reviews}) => {
       <Link to='/'>
         <button>To Main</button>
       </Link>
+      <Link to='/create'>
+        <button>Create Review</button>
+      </Link>
     </div>
   )
 

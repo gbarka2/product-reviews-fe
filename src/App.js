@@ -4,6 +4,7 @@ import React, {useState, useEffect} from 'react'
 import Product from './Product'
 import {Route, Link, Switch} from 'react-router-dom'
 import Review from './Review'
+import CreateForm from './CreateForm';
 
 function App() {
 
@@ -34,6 +35,19 @@ function App() {
     }
   }
 
+  const createReview = (product) => {
+    // fetch("http://localhost:3000/products/" + product + "/reviews"), {
+    //   method: "post",
+    //   headers: {
+    //     "Content-Type": "application/json"
+    //   },
+    //   body: JSON.stringify(product)
+    // }
+    // .then(() => {
+    //   getReviews()
+    // })
+  }
+
   return (
     <div className="App">
       <h1>Products</h1>
@@ -46,7 +60,9 @@ function App() {
           />
           <Route
             path='/create'
-            // render
+            render={(rp) => (
+              <CreateForm {...rp} reviews={reviews} handleSubmit={createReview} />
+            )}
           />
           <Route
             path='/edit'
